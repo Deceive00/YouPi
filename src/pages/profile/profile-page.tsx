@@ -1,81 +1,125 @@
-import React from 'react'
-import MainLayout from 'src/layout/main-layout'
-import { Input } from "@components/ui/input";
+import { Separator } from "@radix-ui/react-separator";
+import MainLayout from "src/layout/main-layout";
+import dummyPng from "@assets/images/default.png";
+import ProfileVendor from "./profile-vendor";
+import { FaUniversity } from "react-icons/fa";
+import { FaAddressCard } from "react-icons/fa";
+import { FaMoneyBillWave } from "react-icons/fa";
+import React from "react";
+import ProfilePreferences from "./profiel-preference";
+import ProfileFavourites from "./profile-favourites";
+import { FaLongArrowAltRight } from "react-icons/fa";
+import "./profile-animation.css"
+import { useAuth } from "@lib/hooks/useAuth";
 
 export default function ProfilePage() {
+  // State
+  const [activeSection, setActiveSection] = React.useState('Vendor')
+
+  // Curr User
+  // const {user} = useAuth()
+
   return (
-    <MainLayout>
-      
-        <div className='container pt-20 w-4/5 mx-auto'>
-          <div className='flex bg-center relative w-full h-68 rounded-2xl pb-8 pl-8 shadow-md'>
-            <div className='w-full absolute left-0 top-0 h-32 bg-slate-400 rounded-t-2xl z-0'
-            style={{ backgroundImage: "url('https://images.axios.com/gIMCWO5TN6OlCsXW965xfSKSC9k=/0x0:1920x1080/1920x1080/2024/05/16/1715870547736.jpg')",
-              backgroundSize: "cover",
-             }}></div>
-            <div className='flex'>
-              <div className='flex mt-20 relative align-bottom'>
-                <img src="https://beforeigosolutions.com/wp-content/uploads/2021/12/dummy-profile-pic-300x300-1.png" 
-                alt="" className='rounded-full w-40 h-40  border-4 border-white shadow-md z-10'/>
-                <div className='flex flex-col absolute right-0 bottom-0'>
-                  <img src="https://www.svgrepo.com/show/42233/pencil-edit-button.svg" alt="" className='w-6 h-6'/> 
-                </div>
-              </div>
-              <div className='flex flex-col pl-6 h-auto justify-end gap-4'>
-                <div className='mt-10'> 
-                  <h1 className='text-2xl font-bold'>GOYOUNJUNG</h1>
-                  <p className='text-gray-500 font-medium'>@goyounjung04</p>
-                </div>
-                <button className='bg-primary color hover:bg-primary/90 rounded-md w-3/5 h-8 text-sm text-white'>Log Out</button>
-              </div>
+    <MainLayout className={`lg:pt-14 sm:pt-16`}>
+      {/* Image Background */}
+
+      {/* Content */}
+      <div
+        className={`flex flex-row w-screen min-h-screen box-border px-32 font-nunito pt-4 gap-x-4`}
+      >
+        {/* Left */}
+        <div
+          className={`w-[40%] flex flex-col justify-start items-center gap-y-8`}
+        >
+          <div className="w-[6rem] h-[6rem]">
+            <img src={dummyPng} alt="" className="rounded-full" />
+          </div>
+          <h1 className="text-2xl font-bold">{}</h1>
+          <div className="flex flex-col text-center text-slate-600">
+            <span>3 May 2023</span>
+            <span>ryan@binus.ac.id</span>
+          </div>
+          {/* Student Detail */}
+          <div className="flex flex-row w-full justify-around">
+            <div className="flex flex-col text-center items-center">
+              <FaAddressCard className="text-3xl" />
+              <span className="text-black">2602098710</span>
+            </div>
+
+            <div className="flex flex-col text-center items-center">
+              <FaUniversity className="text-3xl" />
+              <span className="text-black">BINUS University</span>
+            </div>
+
+            <div className="flex flex-col text-center items-center">
+              <FaMoneyBillWave className="text-3xl" />
+              <span className="text-black">12 Transaction</span>
             </div>
           </div>
-          <h1 className='text-2xl font-bold my-11'>Personal Info</h1>
-          <div className='flex flex-col'>
+          <Separator
+            aria-orientation="vertical"
+            className="border-[1.5px] shadow-xl mx-2 w-full"
+          />
+          <span className="text-justify text-black">
+            Description Lorem ipsum dolor sit amet consectetur, adipisicing
+            elit. Optio neque dolor nihil rem cumque provident maiores
+            laboriosam reprehenderit ipsum reiciendis! Illum sint voluptatum at!
+            Sapiente odio atque minima nulla nobis!
+          </span>
 
-            <div className='flex flex-col w-[calc(50%+3rem)]'>
-              <div className='flex gap-12  mb-8'>
-                <div className='flex flex-col w-1/2'>
-                  <Input type="text" id='first-name'  
-                   placeholder='First Name'/>
-                </div>
-                <div className='flex flex-col w-1/2'>
-                  <Input type="text" id='last-name'  
-                   placeholder='Last Name'/>
-                </div>
-              </div>
-              <div className='flex gap-12 mb-8'>
-                <div className='flex flex-col w-1/2'>
-                  <Input type="text" id='nim'  
-                   placeholder='NIM'/>
-                </div>
-                <div className='flex flex-col w-1/2'>
-                  <Input type="text" id='email'  
-                   placeholder='Email'/>
-                </div>
-              </div>
-              <div className='flex gap-12 mb-8'>
-                <div className='flex flex-col w-1/2'>
-                  <Input type="text" id='phone-num'  
-                   placeholder='Phone Number'/>
-                </div>
-                <div className='flex flex-col w-1/2'>
-                  <Input type="date" id='first-name'  
-                   placeholder=''className='text-slate' />
-                </div>
-              </div>
-              <div className='flex flex-col mb-8'>
-                <label htmlFor="user-bio" className='font-extralight mb-1'>Bio</label>
-                <textarea name="user-bio" className="resize-none border rounded-md border-primary p-2 h-60"/>
-              </div>
-            </div>
-            <div className='flex'>
-              <button className='bg-primary color hover:bg-primary/90 rounded-md w-32 h-10 text-sm text-white'>Save Changes</button>
-            </div>
+          <div className="w-full justify-end flex">
+            <button className="w-full py-2 border-0 font-bold border-slate-300 text-primary bg-secondary rounded-sm flex justify-center items-center gap-x-2 hover:animate-arrow">
+              Edit Profile
+              <FaLongArrowAltRight className="text-primary text-xl transition-transform duration-500" />
+            </button>
           </div>
         </div>
+        {/* Right */}
+        <div className={`w-[60%]`}>
+          {/* Header */}
+          <div className="flex flex-row gap-x-8 w-full">
+            <h1
+              className={`font-bold transition-all ease-in-out duration-500 cursor-pointer text-xl ${
+                activeSection == "Vendor" ? "text-red-400" : "text-slate-500"
+              }`}
+              onClick={() => setActiveSection("Vendor")}
+            >
+              Vendor
+            </h1>
+            <h1
+              className={`font-bold transition-all ease-in-out duration-500 cursor-pointer text-xl ${
+                activeSection == "Favourites"
+                  ? "text-red-400"
+                  : "text-slate-500"
+              }`}
+              onClick={() => setActiveSection("Favourites")}
+            >
+              Favourites
+            </h1>
+            <h1
+              className={`font-bold transition-all ease-in-out duration-500 cursor-pointer text-xl ${
+                activeSection == "Preferences"
+                  ? "text-red-400"
+                  : "text-slate-500"
+              }`}
+              onClick={() => setActiveSection("Preferences")}
+            >
+              Preferences
+            </h1>
+          </div>
 
+          <Separator
+            aria-orientation="vertical"
+            className="border-[1.5px] shadow-xl w-full mb-8 mt-4"
+          />
+
+          <div className="w-full h-[80%] overflow-y-auto rounded-md">
+            {activeSection == "Vendor" && <ProfileVendor />}
+            {activeSection == "Favourites" && <ProfileFavourites />}
+            {activeSection == "Preferences" && <ProfilePreferences />}
+          </div>
+        </div>
+      </div>
     </MainLayout>
-    
-  )
-
+  );
 }

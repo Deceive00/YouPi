@@ -10,7 +10,7 @@ export default function About() {
   return (
     <MainLayout className={"pt-14 sm:pt-16 overflow-x-hidden"}>
     {/* Layout terluar */}  
-    <div className={`w-screen-1 h-max font-nunito box-border overflow-x-hidden`}>
+    <div className={`w-screen h-max font-nunito box-border overflow-x-hidden`}>
       {/* 1. Eat and Enjoy With Youpi */}
       <div
         className={`flex lg:flex-row sm:flex-col justify-between items-center w-full lg:h-screen sm:h-auto px-16 mt-8 sm:gap-y-8`}

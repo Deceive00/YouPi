@@ -2,58 +2,104 @@ import { Separator } from "@radix-ui/react-separator";
 import MainLayout from "src/layout/main-layout";
 import dummyPng from "@assets/images/default.png";
 import ProfileVendor from "./profile-vendor";
-import { FaUniversity } from "react-icons/fa";
+import { MdAttachEmail } from "react-icons/md";
 import { FaAddressCard } from "react-icons/fa";
-import { FaMoneyBillWave } from "react-icons/fa";
+import { BsFillTelephoneFill } from "react-icons/bs";
 import React from "react";
 import ProfilePreferences from "./profiel-preference";
 import ProfileFavourites from "./profile-favourites";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import "./profile-animation.css"
-import { useAuth } from "@lib/hooks/useAuth";
+import { useQuery } from "react-query";
+import { fetchUserByID } from "@lib/services/user.service";
+import { auth } from "src/firebase/firebase-config";
+import Loader from "@components/loading/loader";
+import { User } from "@lib/types/user-types";
+import { format } from "date-fns";
+
+function capitalize(str : string | undefined) {
+  return str ? str.charAt(0).toUpperCase() + str.slice(1).toLowerCase() : '';
+}
+
+function formatDate(timestamp : any) {
+  if (!timestamp) return '';
+
+  // Extract seconds and convert to milliseconds
+  const date = new Date(timestamp.seconds * 1000);
+
+  // Format the date as 'dd MM yyyy'
+  return format(date, 'dd MMMM yyyy');
+}
 
 export default function ProfilePage() {
   // State
   const [activeSection, setActiveSection] = React.useState('Vendor')
+  const uid = auth.currentUser?.uid
 
-  // Curr User
-  // const {user} = useAuth()
+  // Fetch User using useQuery and FetchUserByID
+  if(!uid){
+    return <Loader/>
+  }
+
+  const [userData, setUserData] = React.useState<User>();
+  const { isLoading: isLoadingUserData } = useQuery(
+    ["fetchUserByID", uid],
+    () => fetchUserByID(uid),
+    {
+      onSuccess: (data: User) => {
+        setUserData(data);
+
+        console.log(userData?.dob);
+      },
+      onError: (error: any) => {
+        console.log("Error fetching user data ", error.message);
+      },
+    }
+  );
+
+  if (isLoadingUserData) {
+    return (
+    <Loader />
+    );
+  }
 
   return (
-    <MainLayout className={`lg:pt-14 sm:pt-16`}>
+    <MainLayout className={`lg:pt-14 pt-16`}>
       {/* Image Background */}
 
       {/* Content */}
       <div
-        className={`flex flex-row w-screen min-h-screen box-border px-32 font-nunito pt-4 gap-x-4`}
+        className={`flex flex-col lg:flex-row w-screen min-h-screen box-border lg:px-32 font-nunito pt-4 lg:gap-x-4 lg:gap-y-0 gap-y-4`}
       >
         {/* Left */}
         <div
-          className={`w-[40%] flex flex-col justify-start items-center gap-y-8`}
+          className={`px-4 lg:px-0 lg:w-[40%] flex flex-col justify-start items-center gap-y-8`}
         >
-          <div className="w-[6rem] h-[6rem]">
-            <img src={dummyPng} alt="" className="rounded-full" />
-          </div>
-          <h1 className="text-2xl font-bold">{}</h1>
-          <div className="flex flex-col text-center text-slate-600">
-            <span>3 May 2023</span>
-            <span>ryan@binus.ac.id</span>
+          <div className="flex flex-col justify-center items-center gap-y-2">
+            <div className="w-[6rem] h-[6rem]">
+              <img src={dummyPng} alt="" className="rounded-full" />
+            </div>
+            <h1 className="text-2xl font-bold">{userData?.firstName} {capitalize(userData?.lastName)}</h1>
+            <div className="flex flex-col text-center text-slate-600">
+              <span>{formatDate(userData?.dob)}</span>
+              <span>BINUS University</span>
+            </div>
           </div>
           {/* Student Detail */}
           <div className="flex flex-row w-full justify-around">
             <div className="flex flex-col text-center items-center">
               <FaAddressCard className="text-3xl" />
-              <span className="text-black">2602098710</span>
+              <span className="text-black">{userData?.nim}</span>
             </div>
 
             <div className="flex flex-col text-center items-center">
-              <FaUniversity className="text-3xl" />
-              <span className="text-black">BINUS University</span>
+              <MdAttachEmail className="text-3xl" />
+              <span className="text-black">{userData?.email}</span>
             </div>
 
             <div className="flex flex-col text-center items-center">
-              <FaMoneyBillWave className="text-3xl" />
-              <span className="text-black">12 Transaction</span>
+              <BsFillTelephoneFill className="text-3xl" />
+              <span className="text-black">{userData?.phoneNumber}</span>
             </div>
           </div>
           <Separator
@@ -75,7 +121,7 @@ export default function ProfilePage() {
           </div>
         </div>
         {/* Right */}
-        <div className={`w-[60%]`}>
+        <div className={`lg:w-[60%] lg:px-0 px-4`}>
           {/* Header */}
           <div className="flex flex-row gap-x-8 w-full">
             <h1
@@ -113,7 +159,7 @@ export default function ProfilePage() {
             className="border-[1.5px] shadow-xl w-full mb-8 mt-4"
           />
 
-          <div className="w-full h-[80%] overflow-y-auto rounded-md">
+          <div className="w-full h-[80%] overflow-y-auto rounded-md pb-4 lg:pb-0">
             {activeSection == "Vendor" && <ProfileVendor />}
             {activeSection == "Favourites" && <ProfileFavourites />}
             {activeSection == "Preferences" && <ProfilePreferences />}

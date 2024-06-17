@@ -1,6 +1,5 @@
 import {  Message, UserChats, UserInfo } from "@lib/types/chat-types";
 import { Timestamp, arrayUnion, doc, getDoc, onSnapshot, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
 import { auth, db } from "src/firebase/firebase-config";
 import {v4 as uuidv4 } from "uuid"
 import { fetchUserByID } from "./user.service";

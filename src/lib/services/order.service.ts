@@ -424,7 +424,21 @@ export const getNewStatus = (type: string, currentStatus: string) => {
     ? DELIVERY_STATUS_LIST[
         DELIVERY_STATUS_LIST.findIndex(
           (status: string) => status === currentStatus
-        )
+        ) + 1
+      ]
+    : PICKUP_STATUS_LIST[
+        PICKUP_STATUS_LIST.findIndex(
+          (status: string) => status === currentStatus
+        ) + 1
+      ];
+};
+
+export const getCurrStatus = (type: string, currentStatus: string) => {
+  return type === ORDER_TYPE.DELIVERY
+    ? DELIVERY_STATUS_LIST[
+        DELIVERY_STATUS_LIST.findIndex(
+          (status: string) => status === currentStatus
+        ) 
       ]
     : PICKUP_STATUS_LIST[
         PICKUP_STATUS_LIST.findIndex(

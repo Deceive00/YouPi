@@ -18,7 +18,14 @@ export default function LandingPage() {
 
   return (
     <MainLayout className={"bg-white pt-14"}>
-      <div className="w-full md:h-[80vh] flex flex-col gap-5 justify-center items-center font-nunito">
+      <div className="w-full h-[93vh] bg-">
+        <img className="w-full h-full filter brightness-[0.4]" src="https://firebasestorage.googleapis.com/v0/b/youpi-92b43.appspot.com/o/assets%2Flanding-gif.gif?alt=media&token=6d9df5aa-f900-428e-8f12-ed1877455ba0" alt="" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center text-center gap-7" >
+          <img className="w-7/12" src="https://firebasestorage.googleapis.com/v0/b/youpi-92b43.appspot.com/o/assets%2Flogo-youpi.png?alt=media&token=51442e92-bc5e-4352-b56a-775e253cef41" alt="" />
+          <h2 className="text-white font-bold font-nunito text-4xl ">Effortlessly Delicious.</h2>
+        </div>
+      </div>
+      <div className="w-full md:h-[93vh] flex flex-col gap-5 justify-center items-center font-nunito">
         <div className="font-extrabold text-4xl p-10 pb-16 text-center">
           Thrive with {""}
           <span className="text-[#E68D3B]">You</span>
@@ -50,7 +57,7 @@ export default function LandingPage() {
         </div>
       </div>
       <div className="w-full">
-        <div className="h-screen md:h-[83vh] w-full flex flex-col md:flex-row">
+        <div className="h-screen md:h-[80vh] w-full flex flex-col md:flex-row">
           <div className="relative w-full md:w-1/2 h-full bg-[#2B2929] p-4 xl:p-16 text-[#F1EFEF] font-nunito">
             <div className="absolute left-16 sm:left-20 xl:left-32 top-0 bg-[#F1EFEF] h-2/3 lg:h-5/6 w-14 sm:w-24 lg:w-28 rounded-b-xl"></div>
             <img

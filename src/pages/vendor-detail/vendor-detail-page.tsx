@@ -2,7 +2,7 @@ import { Button } from "@components/ui/button";
 import { addCart, fetchVendorDataById } from "@lib/services/vendor.service";
 import { MenuCart, UserCart } from "@lib/types/user-types";
 import { Menu, Vendor } from "@lib/types/vendor-types";
-import { collection, doc, getDoc, onSnapshot } from "firebase/firestore";
+import { collection, doc, getDoc, onSnapshot, orderBy } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { GrRestaurant } from "react-icons/gr";
 import { IoIosStar } from "react-icons/io";
@@ -284,6 +284,13 @@ export default function VendorDetailPage() {
     }
   };
 
+  // Calculate Stars
+  const calculateStars = () => {
+    if(vendorData?.rating && vendorData.review){
+      return (vendorData?.rating / vendorData?.review)
+    }
+  }
+
   useEffect(() => {
     let unsubscribe = () => {};
     if (auth.currentUser && auth.currentUser.uid) {
@@ -340,7 +347,7 @@ export default function VendorDetailPage() {
                   <div className="font-bold">
                     {
                       !isLoadingVendorData ? (
-                        vendorData?.rating as React.ReactNode
+                        calculateStars() as React.ReactNode
                       ) : (
                         <Skeleton className="w-4 h-4 bg-gray-200"/>
                       )

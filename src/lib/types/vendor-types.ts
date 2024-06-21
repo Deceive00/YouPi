@@ -3,7 +3,7 @@ export interface Menu{
   name: string;
   description: string;
   image: string;
-  price: Number;
+  price: number;
   notes: string;
   quantity:number;
 }
@@ -17,8 +17,8 @@ export interface Vendor {
   email: string;
   name: string;
   coverImage: string;
-  rating: Number;
-  review: Number;
+  rating: number; //rating = banyak bintangnya
+  review: number; //review = counter udh berapa kali
   id: string;
   description: string;
   campusName: string;

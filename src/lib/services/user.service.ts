@@ -1,5 +1,5 @@
 import { User } from "@lib/types/user-types";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, increment, updateDoc } from "firebase/firestore";
 import { db } from "src/firebase/firebase-config";
 
 export const fetchUserByID = async (userId: string): Promise<User | undefined> => {
@@ -20,3 +20,19 @@ export const fetchUserByID = async (userId: string): Promise<User | undefined> =
     console.log(err);
   }
 };
+
+export const addSenderReviewByID = async (userId : string, stars: number ) => {
+  // Using UpdateDoc, add to Database ReviewSender from stars
+  try{
+    const userDocRef = doc(db, "users", userId);
+    await updateDoc(userDocRef, {
+      reviewSender: increment(stars),
+      reviewCount : increment(1)
+    });
+
+    console.log("Review Added Successfully [!]");
+    
+  }catch(err){
+    console.log("Error to add Sender Review : " + err);
+  }
+}

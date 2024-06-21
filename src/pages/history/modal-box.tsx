@@ -16,6 +16,7 @@ interface Props {
   children: React.ReactNode;
   modalRef: React.RefObject<HTMLDialogElement>;
   userHistory: UserHistory;
+  onReviewClicked: () => void;
 }
 
 const ModalBox: React.FC<Props> = ({
@@ -24,6 +25,7 @@ const ModalBox: React.FC<Props> = ({
   children,
   modalRef,
   userHistory,
+  onReviewClicked
 }) => {
 
   const uid = auth.currentUser?.uid
@@ -70,15 +72,15 @@ const ModalBox: React.FC<Props> = ({
         <Separator className="border-[0.5px] rounded-lg" />
         <div className={`overflow-y-auto h-max hide-scrollbar`}>{children}</div>
         <Separator className="border-[0.5px]" />
-        <div className={`w-full h-[10%] flex flex-row my-4 gap-x-4`}>
-          <button
-            className={`w-1/2 rounded-lg border border-primary text-primary font-semibold`}
-          >
+        <div className={`w-full h-[10%] flex flex-row mt-4 gap-x-4`}>
+
+          {/* OnClick Calls handleReview */}
+          <button onClick={onReviewClicked} className={`py-2 w-1/2 rounded-lg border border-primary text-primary font-semibold`}>
             Review
           </button>
           <button
             onClick={handleReorderClick}
-            className={`w-1/2 bg-primary text-secondary rounded-lg font-semibold`}
+            className={`py-2 w-1/2 bg-primary text-secondary rounded-lg font-semibold`}
           >
             Reoder
           </button>

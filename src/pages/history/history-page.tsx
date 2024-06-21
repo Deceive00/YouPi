@@ -49,8 +49,6 @@ const HistoryPage = () => {
     return ""
   }
 
-  // Reorder Handler
-
   // [V] State for Viewing Detail Handler
   const [isDetailOpen, setIsDetailOpen] = React.useState(true)
   const modalRef = React.useRef<HTMLDialogElement>(null)

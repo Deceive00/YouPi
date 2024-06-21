@@ -35,25 +35,6 @@ const ChatPage : React.FC<Props> = ({initialId}) => {
   const [otherId, setOtherId] = React.useState("");
   const [userInfo, setUserInfo] = React.useState<UserInfo>();
 
-  // React.useEffect(() => {
-  //   if (initialId) {
-  //     setOtherId(initialId);
-  //     fetchUserByID(initialId).then((userInfo) => {
-  //       if (userInfo) {
-  //         setUserInfo({
-  //           uid: initialId,
-  //           displayName: `${userInfo.firstName} ${userInfo.lastName}`,
-  //           photoUrl: profilePng
-  //         });
-  //         setIsDetailOpen(true);
-  //       }
-
-  //       console.log("Detail after opened : ", userInfo);
-        
-  //     });
-  //   }
-  // }, [initialId]);
-
   //Change User
   React.useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {

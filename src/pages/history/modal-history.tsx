@@ -6,9 +6,10 @@ import { MdMyLocation } from "react-icons/md";
 import React from "react";
 import dummyImg from "@assets/images/default.png";
 import { UserHistory } from "@lib/types/history-types";
-import { fetchUserByID } from "@lib/services/user.service";
+import { addSenderReviewByID, fetchUserByID } from "@lib/services/user.service";
 import { Menu } from "@lib/types/vendor-types";
 import { User } from "@lib/types/user-types";
+import { addVendorReviewByID } from "@lib/services/vendor.service";
 
 interface Props {
   modalRef: React.RefObject<HTMLDialogElement>;
@@ -29,23 +30,44 @@ const ModalHistory: React.FC<Props> = ({
   isDetailOpen,
   userHistory,
 }) => {
+  //State to pass for the stars
+  const [vendorStars, setVendorStars] = React.useState(1);
+  const [senderStars, setsenderStars] = React.useState(1);
+
+  // Handle Review
+  const handleReview = () => {
+    // get State of the stars
+    if(userHistory.order.vendorId){
+      addVendorReviewByID(userHistory.order.campusName ,userHistory.order.vendorId, vendorStars)
+
+      console.log("Successfully added to Vendor ID : " + userHistory.order.vendorId);
+    }
+    
+    if(userHistory.order.senderId){
+      addSenderReviewByID( userHistory.order.senderId, senderStars);
+
+      console.log("Successfully added to Sender ID : " + userHistory.order.senderId);
+    }
+  };
+
   // State
   const fee = 5000;
-  const [senderData, setSenderData] = React.useState<User | null>(null)
+  const [senderData, setSenderData] = React.useState<User | null>(null);
 
   React.useEffect(() => {
     const fetchUserData = async () => {
-      if(userHistory){
-        const data = await fetchUserByID(userHistory.order.senderId)
-        setSenderData(data || null)
+      if (userHistory) {
+        const data = await fetchUserByID(userHistory.order.senderId);
+        setSenderData(data || null);
       }
-    }
+    };
 
-    fetchUserData()
-  }, [userHistory])
+    fetchUserData();
+  }, [userHistory]);
 
   return (
     <ModalBox
+      onReviewClicked={handleReview}
       userHistory={userHistory}
       modalRef={modalRef}
       title="Order Summary"
@@ -61,7 +83,7 @@ const ModalHistory: React.FC<Props> = ({
             <br />
             (1 is dissapointing, 5 is awesome)
           </span>
-          <RatingStars name="food-rating" key={1} />
+          <RatingStars value={vendorStars} onChange={setVendorStars} name="food-rating" key={1} />
         </div>
 
         {/* Sender */}
@@ -71,7 +93,7 @@ const ModalHistory: React.FC<Props> = ({
             <br />
             (1 is dissapointing, 5 is awesome)
           </span>
-          <RatingStars name="driver-rating" key={2} />
+          <RatingStars value={senderStars} onChange={setsenderStars} name="driver-rating" key={2} />
         </div>
       </div>
       <Separator className="border-[0.5px] rounded-lg" />

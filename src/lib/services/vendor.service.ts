@@ -7,9 +7,11 @@ import {
   doc,
   getDoc,
   getDocs,
+  increment,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
+import { Trophy } from "lucide-react";
 import { auth, db } from "src/firebase/firebase-config";
 import { v4 as uuidv4 } from "uuid";
 export const fetchRestaurantData = async () => {
@@ -348,5 +350,41 @@ export const fetchUserCartFE = async () => {
     }
   } else {
     throw new Error("User Cart Is Empty")
+  }
+}
+
+export const addVendorReviewByID = async (campusName: string ,vendorId : string, stars : number) => {
+  try{
+    const vendorDocRef = doc(db, "campus", campusName);
+
+    // Fetch the document data
+    const restaurantDoc = await getDoc(vendorDocRef);
+
+    const restaurantData: Campus = restaurantDoc.data() as Campus;
+    if(restaurantData) {
+      const vendorIdx = restaurantData.vendors.findIndex(
+        (v:any) => v.id == vendorId
+      );
+
+      // If we found it
+      if (vendorIdx !== -1) {
+        const vendor = restaurantData.vendors[vendorIdx];
+
+        // Update the rating and review
+        vendor.rating = (vendor.rating || 0) + stars;
+        vendor.review = (vendor.review || 0) + 1;
+
+        restaurantData.vendors[vendorIdx] = vendor;
+
+        // Save the updated data
+        await updateDoc(vendorDocRef, {
+          vendors: restaurantData.vendors,
+        });
+      }
+    }
+
+    console.log("Review Added Successfully [!]");
+  }catch(err){
+    console.log("Error to add Vendor Review : " + err);
   }
 }

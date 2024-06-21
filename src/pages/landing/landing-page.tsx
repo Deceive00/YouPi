@@ -9,20 +9,30 @@ import { useAuth } from "@lib/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
 export default function LandingPage() {
-  const {userType} = useAuth();
+  const { userType } = useAuth();
   const navigate = useNavigate();
-  if(userType === UserType.VENDOR){
+  if (userType === UserType.VENDOR) {
     navigate("/vendor/manage/menu");
     return;
-  };
+  }
 
   return (
     <MainLayout className={"bg-white pt-14"}>
       <div className="w-full h-[93vh] bg-">
-        <img className="w-full h-full filter brightness-[0.4]" src="https://firebasestorage.googleapis.com/v0/b/youpi-92b43.appspot.com/o/assets%2Flanding-gif.gif?alt=media&token=6d9df5aa-f900-428e-8f12-ed1877455ba0" alt="" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center text-center gap-7" >
-          <img className="w-7/12" src="https://firebasestorage.googleapis.com/v0/b/youpi-92b43.appspot.com/o/assets%2Flogo-youpi.png?alt=media&token=51442e92-bc5e-4352-b56a-775e253cef41" alt="" />
-          <h2 className="text-white font-bold font-nunito text-4xl ">Effortlessly Delicious.</h2>
+        <img
+          className="w-full h-full filter object-cover brightness-[0.4]"
+          src="https://firebasestorage.googleapis.com/v0/b/youpi-92b43.appspot.com/o/assets%2Flanding-gif.gif?alt=media&token=6d9df5aa-f900-428e-8f12-ed1877455ba0"
+          alt=""
+        />
+        <div className="absolute top-1/2 left-1/2  -translate-x-1/2 -translate-y-1/2 flex flex-col items-center text-center gap-7">
+          <img
+            className="md:w-[30rem]"
+            src="https://firebasestorage.googleapis.com/v0/b/youpi-92b43.appspot.com/o/assets%2Flogo-youpi.png?alt=media&token=51442e92-bc5e-4352-b56a-775e253cef41"
+            alt=""
+          />
+          <h2 className="text-white font-bold font-nunito text-2xl md:text-4xl ">
+            Effortlessly Delicious.
+          </h2>
         </div>
       </div>
       <div className="w-full md:h-[93vh] flex flex-col gap-5 justify-center items-center font-nunito">
@@ -41,7 +51,14 @@ export default function LandingPage() {
               We are home to over 2 thounsand partner drivers in Southeast Asia,
               who receive financial security and healthcare facilities.
             </p>
-            <Button className="font-bold" onClick={()=>{navigate("/auth/sender")}}>Learn More</Button>
+            <Button
+              className="font-bold"
+              onClick={() => {
+                navigate("/auth/sender");
+              }}
+            >
+              Learn More
+            </Button>
           </div>
           <div className="gap-4 md:gap-0 relative sm:w-2/3 lg:w-1/3 h-full bg-white shadow-md rounded-lg p-12 pb-8 flex flex-col items-start justify-around hover:cursor-pointer hover:-translate-y-1 hover:shadow-lg transition-all ease-in-out duration-500">
             <img src={vendorImg} className="absolute -top-7 w-16" />
@@ -52,7 +69,14 @@ export default function LandingPage() {
               We assist 500,000+ Business Partners in multiplying sales,
               expanding reach, and growing with new technologies.
             </p>
-            <Button className="font-bold text" onClick={() => {navigate("/auth/vendor")}}>Learn More</Button>
+            <Button
+              className="font-bold text"
+              onClick={() => {
+                navigate("/auth/vendor");
+              }}
+            >
+              Learn More
+            </Button>
           </div>
         </div>
       </div>

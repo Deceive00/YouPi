@@ -43,7 +43,7 @@ const OrderCard: React.FC<Props> = ({
         <div className={`flex flex-row justify-between items-end h-full`}>
           <div className="flex h-full w-full justify-start items-center">
             <span className={`text-xl font-semibold`}>
-              Rp {calculateTotalPrice(userHistory.order.menus) - 15000}
+              Rp {calculateTotalPrice(userHistory.order.menus) - 5000}
             </span>
           </div>
           <button

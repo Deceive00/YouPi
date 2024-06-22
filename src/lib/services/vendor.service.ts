@@ -278,7 +278,7 @@ export const addCart = async ({
   }
 };
 
-export const fetchVendorDataByVendorId = async (vendorId: string) => {
+export const fetchVendorDataByVendorId = async (vendorId: string) : Promise<Vendor | undefined | null>=> {
   const allCampus = await fetchRestaurantData();
   let found = false;
   let selectedVendor : Vendor | null = null;
@@ -323,7 +323,7 @@ export const fetchMenuById = () => {
 export const fetchUserCartFE = async () => {
   const dataBE : UserCart = await fetchCart();
   if(dataBE) {
-    const vendor : Vendor | null = await fetchVendorDataByVendorId(dataBE.vendorId);
+    const vendor : Vendor | null | undefined = await fetchVendorDataByVendorId(dataBE.vendorId);
     if(vendor){
       const menuIds : string[] = [];
       dataBE.menus.map((menu : MenuCart) => {

@@ -39,10 +39,10 @@ export default function OrderDetail() {
 
   const userId = auth.currentUser?.uid;
 
-  const messageHandler = async (toId: string, text: string) => {
+  const messageHandler = async (toId: string, text: string, targetRole: string) => {
     // Call Function from chat.service.ts ( startMessaging )
     if (userId && toId) {
-      await startMessaging(userId, toId, text);
+      await startMessaging(userId, toId, text, targetRole);
 
       console.log(`Start Messaing`);
       console.log(`From : ${userId}`);

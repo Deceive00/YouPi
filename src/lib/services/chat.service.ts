@@ -4,6 +4,10 @@ import { auth, db } from "src/firebase/firebase-config";
 import {v4 as uuidv4 } from "uuid"
 import { fetchUserByID } from "./user.service";
 import dummyPng from "@assets/images/default.png"
+import { fetchVendorDataByVendorId } from "./vendor.service";
+import { log } from "console";
+import { User } from "@lib/types/user-types";
+import { Vendor } from "@lib/types/vendor-types";
 
 // const navigate = useNavigate()
 
@@ -100,7 +104,7 @@ export const startMessaging = async (userId : string, otherId : string, text : s
     await handleUserChats(userId, otherId, text, combinedId);
 
     // 2. Update UserChats untuk otherUser
-    await handleUserChats(otherId, otherId,text, combinedId);
+    await handleUserChats(otherId, userId,text, combinedId);
 
     // navigate('/chat')
   }catch(err){
@@ -124,14 +128,17 @@ export const sendMessage = async (currId : string, combinedId: string, text: str
 export const handleUserChats = async (id: string, otherId: string, text: string, combinedId: string) => {
   const docRef = doc(db, "userChats", id)
   const docSnapshot = await getDoc(docRef)
-
-  const currentUserData = await fetchUserByID(id);
-
+  let currentUserData : Vendor | User | undefined | null = await fetchVendorDataByVendorId(otherId);
+  if(currentUserData == null || currentUserData == undefined){
+    currentUserData = await fetchUserByID(otherId);
+  }
+  console.log(currentUserData);
+  
   // Get user data
   const ui: UserInfo = {
     uid: otherId,
-    displayName: `${currentUserData?.firstName} ${currentUserData?.lastName}`,
-    photoUrl: dummyPng
+    displayName: (currentUserData as Vendor)?.name ? `${(currentUserData as Vendor)?.name}` : `${(currentUserData as User)?.firstName + (currentUserData as User)?.lastName}`,
+    photoUrl: (currentUserData as Vendor)?.coverImage ? `${(currentUserData as Vendor)?.coverImage}` : `${(currentUserData as User)?.profilePicture ? (currentUserData as User)?.profilePicture : "https://firebasestorage.googleapis.com/v0/b/youpi-92b43.appspot.com/o/default.png?alt=media&token=429db833-8c08-4045-8122-ad42130f2883"}`
   };
 
 

@@ -30,7 +30,7 @@ export default function AuthPage() {
           } lg:p-7 lg:pr-0 h-full transition-all duration-300`}
         >
           <img
-            src="https://firebasestorage.googleapis.com/v0/b/dg-travelohi.appspot.com/o/434228032_387590770791800_8682384244587217201_n.jpeg?alt=media&token=ec92f6c2-8871-4965-b1d3-346bd34fbf33"
+            src="https://firebasestorage.googleapis.com/v0/b/youpi-92b43.appspot.com/o/assets%2Ffood-form.jpg?alt=media&token=13865b70-dc84-4a62-b94d-b8ba811ef19dhttps://firebasestorage.googleapis.com/v0/b/youpi-92b43.appspot.com/o/assets%2Ffood-form.jpg?alt=media&token=b24d39c0-8e4d-4a89-8f76-545d9fe38721"
             alt="Image"
             className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale lg:rounded-[2rem]"
           />

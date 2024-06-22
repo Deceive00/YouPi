@@ -38,7 +38,7 @@ export default function About() {
             <div
               className={`px-auto mx-auto flex flex-col justify-start space-y-4`}
             >
-              <button className={`bg-black text-white py-3 px-8 rounded`}>
+              <button onClick={()=>{window.open('https://binus.ac.id/', '_blank');}} className={`bg-black text-white py-3 px-8 rounded`}>
                 Explore More
               </button>
               <div className={`flex -space-x-4 rtl:space-x-reverse`}>
@@ -128,10 +128,10 @@ export default function About() {
             everyone, so you can focus on your kitchen.
           </p>
           <div className={`flex flex-row lg:gap-x-12 sm:justify-between lg:justify-start`}>
-            <button className={`bg-black text-white py-3 lg:px-8 sm:px-6 rounded`}>
+            <button onClick={()=>{window.open('https://binus.ac.id/', '_blank');}} className={`bg-black text-white py-3 lg:px-8 sm:px-6 rounded`}>
               Explore partner stories
             </button>
-            <button
+            <button onClick={()=>{window.open('https://binus.ac.id/', '_blank');}}
               className={`border-2 border-black text-black bg-transparent py-3 lg:px-8 sm:px-6 rounded flex items-center`}
             >
               Contact Our Team <FaArrowRight className={`ml-2`} />

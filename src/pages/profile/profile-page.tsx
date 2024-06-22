@@ -191,7 +191,7 @@ import { useToast } from "@components/ui/use-toast";
 import { Toaster } from "@components/ui/toaster";
 
 export default function ProfilePage() {
-  const { user, userType, isLoading } = useAuth();
+  const { user, userType, isLoading, logout } = useAuth();
   const [load, setLoad] = useState(false);
   const {
     control,
@@ -239,7 +239,8 @@ export default function ProfilePage() {
     async (data: any) => {
       setLoad(true);
       const defaultPhoto =
-        (user as User)?.profilePicture || "https://firebasestorage.googleapis.com/v0/b/youpi-92b43.appspot.com/o/default.png?alt=media&token=429db833-8c08-4045-8122-ad42130f2883";
+        (user as User)?.profilePicture ||
+        "https://firebasestorage.googleapis.com/v0/b/youpi-92b43.appspot.com/o/default.png?alt=media&token=429db833-8c08-4045-8122-ad42130f2883";
       let profilePictureUrl: string = defaultPhoto;
       console.log(data);
       if (data.profilePicture && !data.profilePicture.length) {
@@ -260,8 +261,8 @@ export default function ProfilePage() {
         profilePicture: profilePictureUrl,
         isSender: (user as User)?.isSender,
         lastName: data.lastName,
-        senderReview:(user as User)?.senderReview || 0,
-      })
+        senderReview: (user as User)?.senderReview || 0,
+      });
     },
     {
       onSuccess: () => {
@@ -272,7 +273,7 @@ export default function ProfilePage() {
         toast({
           title: error.message,
           variant: "error",
-        })
+        });
       },
     }
   );
@@ -284,9 +285,11 @@ export default function ProfilePage() {
   };
 
   if (load) {
-    return <MainLayout>
-      <Loader />
-    </MainLayout>;
+    return (
+      <MainLayout>
+        <Loader />
+      </MainLayout>
+    );
   }
 
   return (
@@ -329,7 +332,13 @@ export default function ProfilePage() {
                   </h1>
                   {/* <p className='text-gray-500 font-medium'>@goyounjung04</p> */}
                 </div>
-                <button className="bg-primary color hover:bg-primary/90 rounded-md w-20 h-8 text-sm text-white">
+                <button
+                  onClick={() => {
+                    logout();
+                    navigate("/");
+                  }}
+                  className="bg-primary color hover:bg-primary/90 rounded-md w-20 h-8 text-sm text-white"
+                >
                   Log Out
                 </button>
               </div>
@@ -396,7 +405,9 @@ export default function ProfilePage() {
                   <Controller
                     name="nim"
                     control={control}
-                    defaultValue={isLoading ? "Loading" : (user as User)?.nim || ''}
+                    defaultValue={
+                      isLoading ? "Loading" : (user as User)?.nim || ""
+                    }
                     rules={{ required: "NIM is required" }}
                     render={({ field }) => (
                       <Input
@@ -405,7 +416,9 @@ export default function ProfilePage() {
                         type="text"
                         required
                         placeholder="NIM"
-                        defaultValue={isLoading ? "Loading" : (user as User)?.nim || ''}
+                        defaultValue={
+                          isLoading ? "Loading" : (user as User)?.nim || ""
+                        }
                       />
                     )}
                   />
@@ -414,7 +427,7 @@ export default function ProfilePage() {
                   <Controller
                     name="email"
                     control={control}
-                    defaultValue={(user as User)?.email || ''}
+                    defaultValue={(user as User)?.email || ""}
                     render={({ field }) => (
                       <Input
                         type="text"

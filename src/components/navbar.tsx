@@ -96,7 +96,7 @@ const Navbar = ({ className = "bg-transparent", isLoading }: Props) => {
                   <div className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md transition-all duration-300">
                     <img
                       className="w-7 h-7 object-cover rounded-3xl cursor-pointer"
-                      src={blank}
+                      src={(user as User)?.profilePicture || blank}
                       alt=""
                     />
                     <p>{(user as User).firstName as React.ReactNode}</p>

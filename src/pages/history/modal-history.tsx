@@ -10,6 +10,8 @@ import { addSenderReviewByID, fetchUserByID } from "@lib/services/user.service";
 import { Menu } from "@lib/types/vendor-types";
 import { User } from "@lib/types/user-types";
 import { addVendorReviewByID } from "@lib/services/vendor.service";
+import { Toaster } from "@components/ui/toaster";
+import { toast } from "@components/ui/use-toast";
 
 interface Props {
   modalRef: React.RefObject<HTMLDialogElement>;
@@ -31,22 +33,31 @@ const ModalHistory: React.FC<Props> = ({
   userHistory,
 }) => {
   //State to pass for the stars
-  const [vendorStars, setVendorStars] = React.useState(1);
-  const [senderStars, setsenderStars] = React.useState(1);
+  const [vendorStars, setVendorStars] = React.useState(5);
+  const [senderStars, setsenderStars] = React.useState(5);
 
   // Handle Review
-  const handleReview = () => {
+  const handleReview = async () => {
     // get State of the stars
-    if(userHistory.order.vendorId){
-      addVendorReviewByID(userHistory.order.campusName ,userHistory.order.vendorId, vendorStars)
+    try{
+      if(userHistory.order.vendorId && userHistory.order.senderId){
+        addVendorReviewByID(userHistory.order.campusName ,userHistory.order.vendorId, vendorStars)
+  
+        addSenderReviewByID( userHistory.order.senderId, senderStars);
+        console.log("Successfully added to Vendor ID : " + userHistory.order.vendorId);
 
-      console.log("Successfully added to Vendor ID : " + userHistory.order.vendorId);
-    }
-    
-    if(userHistory.order.senderId){
-      addSenderReviewByID( userHistory.order.senderId, senderStars);
-
-      console.log("Successfully added to Sender ID : " + userHistory.order.senderId);
+        await toast({
+          title: "Review has been sent.",
+          description: `Thankyou for review `,
+          variant: "success",
+        });
+      }
+    }catch(err){
+      toast({
+        title: "Action Failed",
+        description: (err as Error).message,
+        variant: "error",
+      });
     }
   };
 
@@ -198,6 +209,7 @@ const ModalHistory: React.FC<Props> = ({
           <span>{calculateTotalPrice(userHistory.order.menus) - fee}</span>
         </div>
       </div>
+      <Toaster />
     </ModalBox>
   );
 };

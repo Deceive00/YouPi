@@ -11,6 +11,7 @@ import { motion } from "framer-motion";
 import { item, container } from "@components/variants/staggered-children";
 import ModalHistory from "./modal-history";
 import { useAuth } from "@lib/hooks/useAuth";
+import { Toaster } from "@components/ui/toaster";
 
 // [V] Function to capitalize the first letter
 const capitalizeFirstLetter = (string: string) => {
